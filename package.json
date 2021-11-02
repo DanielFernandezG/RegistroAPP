@@ -57,7 +57,7 @@
     "@typescript-eslint/parser": "4.16.1",
     "cordova-android": "^9.1.0",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-geolocation": "^4.1.0",
+    "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-googlemaps": "^2.7.1",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
@@ -85,7 +85,6 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-geolocation": {},
       "cordova-sqlite-storage": {},
       "cordova-plugin-qrscanner": {},
       "cordova-plugin-whitelist": {},
@@ -96,7 +95,8 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-googlemaps": {}
+      "cordova-plugin-googlemaps": {},
+      "cordova-plugin-geolocation": {}
     },
     "platforms": [
       "browser",
