@@ -1,0 +1,45 @@
+<ion-content>
+  <ion-title class="ion-padding-top ion-text-center">Mis datos</ion-title>
+
+  <br />
+
+  <mat-card class="ion-padding-top">
+    <mat-card-content>
+      <ion-label>Rut:  </ion-label>
+      <ion-label *ngIf="persona">{{persona.rut}}</ion-label>
+    </mat-card-content>
+
+    <mat-card-content>
+      <ion-label>Nombre:  </ion-label>
+      <ion-label *ngIf="persona">{{persona.nombre}}</ion-label>
+    </mat-card-content>
+
+    <mat-card-content>
+      <ion-label>Numero:  </ion-label>
+      <ion-label *ngIf="persona">{{persona.numero}}</ion-label>
+    </mat-card-content>
+
+    <mat-card-content>
+      <ion-label>Email:  </ion-label>
+      <ion-label *ngIf="persona">{{persona.email}}</ion-label>
+    </mat-card-content>
+
+    <mat-card-content>
+      <ion-label>Carrera:  </ion-label>
+      <ion-label *ngIf="persona">{{persona.carrera}}</ion-label>
+    </mat-card-content>
+
+    <mat-card-content>
+      <ion-label>Sede:  </ion-label>
+      <ion-label *ngIf="persona">{{persona.sede}}</ion-label>
+    </mat-card-content>
+
+    <br><br><br>
+
+    <ion-fab vertical="bottom" horizontal="end" (click)="editarPerfil()" slot="fixed">
+      <ion-fab-button color="success">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </mat-card>
+</ion-content>

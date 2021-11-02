@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>RegistroAPP</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button
+    class="boton2"
+    expand="full"
+    color="success"
+    (click)="startScan()"
+  >
+    <ion-icon slot="start" name="videocam-outline"></ion-icon>
+    Iniciar Escaner
+  </ion-button>
+
+  <ion-button
+    expand="full"
+    (click)="reset()"
+    color="warning"
+    *ngIf="scanResult"
+  >
+    <ion-icon slot="start" name="refresh"></ion-icon>
+    Reiniciar
+  </ion-button>
+
+  <!-- Shows our camera stream -->
+  <video #video [hidden]="!scanActive" width="100%"></video>
+
+  <!-- Used to render the camera stream images -->
+  <canvas #canvas hidden></canvas>
+
+  <!-- Stop our scanner preview if active -->
+  <ion-button
+    expand="full"
+    (click)="stopScan()"
+    color="danger"
+    *ngIf="scanActive"
+  >
+    <ion-icon slot="start" name="close"></ion-icon>
+    Detener Escaner
+  </ion-button>
+
+  <ion-card *ngIf="scanResult">
+    <ion-card-header>
+      <ion-card-title>Codigo QR</ion-card-title>
+    </ion-card-header>
+    <ion-card-content> {{ scanResult }} </ion-card-content>
+  </ion-card>
+</ion-content>
