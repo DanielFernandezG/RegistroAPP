@@ -1,14 +1,5 @@
-<ion-content>
-  <ion-title class="bienvenido ion-padding-top">
-    <ion-label class="ion-text-center">
-      <p *ngIf="usuario">¡Bienvenido! {{ usuario.nombreUsuario }}</p>
-    </ion-label>
-  </ion-title>
-
-  <mat-card class="card ion-text-center">
-    <button (click)="scan()" mat-raised-button color="warn">
-      <ion-icon name="qr-code-outline"></ion-icon> Registra tu asistencia
-    </button>
-  </mat-card>
-
-</ion-content>
+<mat-card id="fondo" class="card ion-text-center">
+  <button (click)="scan()" id="boton1" mat-raised-button color="warn">
+    <ion-icon name="qr-code-outline"></ion-icon> Registra tu asistencia
+  </button>
+</mat-card>

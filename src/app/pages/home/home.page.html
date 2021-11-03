@@ -1,16 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Sistema de Asistencia DUOC</ion-title>
-        <ion-buttons slot="primary">
-      <ion-button (click)="logout()" color="danger" fill="outline">
+    <ion-segment id="boton">
+      <ion-title>Sistema de Asistencia DUOC</ion-title>
+      <ion-button (click)="logout()" id="botonsalir" fill="outline">
         Salir
         <ion-icon slot="end" name="log-out-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-segment>
   </ion-toolbar>
 
   <ion-toolbar>
-    <ion-segment value="perfil" (ionChange)="segmentChanged($event)">
+    <ion-segment id="boton" value="perfil" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="principal">
         <ion-icon name="home-outline"></ion-icon>
         <ion-label>Home</ion-label>
@@ -19,7 +19,7 @@
         <ion-icon name="person-outline"></ion-icon>
         <ion-label>Perfil</ion-label>
       </ion-segment-button>
-      
+
       <ion-segment-button value="mapa">
         <ion-icon name="school-outline"></ion-icon>
         <ion-label>Mapa</ion-label>
@@ -33,7 +33,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar color="primary">
-    <ion-title class="ion-text-end ion-text footer">Version 1.0</ion-title>
-  </ion-toolbar>
+  <ion-segment id="boton">
+      <ion-title class="ion-text-end ion-text footer">Version 2.0</ion-title>
+  </ion-segment>
 </ion-footer>
