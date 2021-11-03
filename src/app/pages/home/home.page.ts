@@ -39,14 +39,7 @@ export class HomePage implements OnInit {
 
   public ngOnInit() {
 
-    this.router.navigate(['home/principal']);
-
-    const navigationExtras: NavigationExtras = {
-      state: {
-        usuario: this.usuario
-      }
-    };
-    this.router.navigate(['/home/principal'], navigationExtras);
+    this.router.navigate(['/home/principal']);
 
     const footer = this.animationCtrl.create()
       .addElement(document.querySelector('.footer'))

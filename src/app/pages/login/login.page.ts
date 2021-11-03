@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import { type } from 'os';
 import { Usuario } from 'src/app/model/Usuario';
+import { Persona } from 'src/app/model/Persona';
 
 
 
@@ -19,25 +20,25 @@ import { Usuario } from 'src/app/model/Usuario';
 
 export class LoginPage implements OnInit {
 
-  login:any={
-    Usuario:"",
-    Password:""
+  login: any = {
+    Usuario: "",
+    Password: ""
   }
 
-  field:string="";
+  field: string = "";
 
 
 
   public usuario: Usuario;
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
     public dbtaskService: DBTaskService,
     private toastController: ToastController,
     private storage: Storage,
-    private animationCtrl: AnimationController, 
+    private animationCtrl: AnimationController,
     public alertController: AlertController,
-    public authenticationSerive:AuthenticationService
-) {}
+    public authenticationSerive: AuthenticationService
+  ) { }
   public ngOnInit(): void {
 
 
@@ -55,14 +56,14 @@ export class LoginPage implements OnInit {
       .play();
   }
 
-    ingresar(){
-    
-    if(this.validateModel(this.login)){
-      
+  ingresar() {
+
+    if (this.validateModel(this.login)) {
+
       this.authenticationSerive.login(this.login);
     }
-    else{
-      this.presentToast("Falta: "+this.field);
+    else {
+      this.presentToast("Falta: " + this.field);
     }
   }
 
@@ -75,7 +76,7 @@ export class LoginPage implements OnInit {
     this.router.navigate(['recover-password'], navigationExtras);
   }
 
-  registrar(){
+  registrar() {
     this.createSesionData(this.login);
   }
   /**
@@ -83,41 +84,42 @@ export class LoginPage implements OnInit {
    * @param login 
    */
   createSesionData(login: any) {
-    if(this.validateModel(login)){ 
+    if (this.validateModel(login)) {
       /**
        * Se hace una copia del login, se hace así ya que
        * el operador '=' no haceuna copia de los datos, si no
        * que crea una nueva referencia a los mismos datos.
        * Por eso se utiliza el Object.assign
        */
-      let copy = Object.assign({},login);
-      copy.Active=1; 
-      this.dbtaskService.createSesionData(copy) 
-      .then((data)=>{ 
-        this.presentToast("Bienvenido"); 
-        this.storage.set("USER_DATA",data);  
-        this.router.navigate(['home']); 
-      })
-      .catch((error)=>{
-        this.presentToast("El usuario ya existe");
-      })
+      let copy = Object.assign({}, login);
+      copy.Active = 1;
+      this.dbtaskService.createSesionData(copy)
+        .then((data) => {
+          this.presentToast("Usuario creado exitosamente");
+          this.storage.set("USER_DATA", data);
+          this.router.navigate(['home']);
+          this.dbtaskService.createPerfil();
+        })
+        .catch((error) => {
+          this.presentToast("El usuario ya existe");
+        })
     }
-    else{
-      this.presentToast("Falta: "+this.field);
+    else {
+      this.presentToast("Falta: " + this.field);
     }
   }
   /**
    * validateModel sirve para validar que se ingrese algo en los
    * campos del html mediante su modelo
    */
-  validateModel(model:any){
-    
+  validateModel(model: any) {
+
     for (var [key, value] of Object.entries(model)) {
-      
-      if (value=="") {
-      
-        this.field=key;
-        
+
+      if (value == "") {
+
+        this.field = key;
+
         return false;
       }
     }
@@ -128,27 +130,27 @@ export class LoginPage implements OnInit {
    * @param message Mensaje a presentar al usuario
    * @param duration Duración el toast, este es opcional
    */
-  async presentToast(message:string, duration?:number){
+  async presentToast(message: string, duration?: number) {
     const toast = await this.toastController.create(
       {
-        message:message,
-        duration:duration?duration:2000
+        message: message,
+        duration: duration ? duration : 2000
       }
     );
     toast.present();
   }
- 
-  ionViewWillEnter(){
+
+  ionViewWillEnter() {
     console.log('ionViewDidEnter');
-      
-      this.dbtaskService.sesionActive()
-      .then((data)=>{
-        if(data!=undefined){
-          this.storage.set("USER_DATA",data); 
+
+    this.dbtaskService.sesionActive()
+      .then((data) => {
+        if (data != undefined) {
+          this.storage.set("USER_DATA", data);
           this.router.navigate(['home']);
         }
       })
-      .catch((error)=>{
+      .catch((error) => {
         console.error(error);
         this.router.navigate(['login']);
       })
@@ -194,5 +196,5 @@ export class LoginPage implements OnInit {
 
     const { role } = await alert.onDidDismiss();
   }
-  
+
 }

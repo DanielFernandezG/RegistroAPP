@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { AlertController, ToastController, Animation, AnimationController } from '@ionic/angular';
 import { Usuario } from 'src/app/model/Usuario';
+import { Storage } from '@ionic/storage';
+import { AuthenticationService } from '../../services/authentication.service';
+import { DBTaskService } from '../../services/dbtask.service';
+
 
 @Component({
   selector: 'app-recover-password',
@@ -10,11 +14,16 @@ import { Usuario } from 'src/app/model/Usuario';
 })
 export class RecoverPasswordPage implements OnInit {
 
+  login:any={
+    Usuario:"",
+    Password:""
+  }
 
+  field:string="";
 
   public usuario: Usuario;
 
-  constructor(private router: Router, private toastController: ToastController, private animationCtrl: AnimationController, private alertController: AlertController) {
+  constructor(private router: Router, private toastController: ToastController, private animationCtrl: AnimationController, private alertController: AlertController, public authenticationSerive:AuthenticationService) {
     this.usuario = new Usuario();
     this.usuario.nombreUsuario = '';
     this.usuario.password = '';
@@ -37,16 +46,13 @@ export class RecoverPasswordPage implements OnInit {
 
   public inicio(): void {
 
-    if (!this.validarNombreUsuario(this.usuario)) {
-      return;
+    if(this.validateModel(this.login)){
+      // Se obtiene si existe alguna data de sesión
+      this.authenticationSerive.recuperarContrasenna(this.login);
     }
-
-    this.mostrarMensaje('¡Se ha enviado un correo para restablecer su contraseña!');
-
-    const navigationExtras: NavigationExtras = {
-
-    };
-    this.router.navigate(['login'], navigationExtras);
+    else{
+      this.presentToast("Falta: "+this.field);
+    }
 
 
   }
@@ -82,6 +88,41 @@ export class RecoverPasswordPage implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
+  }
+
+  validateModel(model:any){
+    // Recorro todas las entradas que me entrega Object entries y obtengo su clave, valor
+    for (var [key, value] of Object.entries(model)) {
+      // Si un valor es "" se retornara false y se avisara de lo faltante
+      if (value=="") {
+        // Se asigna el campo faltante
+        this.field=key;
+        // Se retorna false
+        return false;
+      }
+    }
+    return true;
+  }
+
+  async presentToast(message:string, duration?:number){
+    const toast = await this.toastController.create(
+      {
+        message:message,
+        duration:duration?duration:2000
+      }
+    );
+    toast.present();
+  }
+
+  ingresar(){
+    // Se valida que el usuario ingreso todos los datos
+    if(this.validateModel(this.login)){
+      // Se obtiene si existe alguna data de sesión
+      this.authenticationSerive.login(this.login);
+    }
+    else{
+      this.presentToast("Falta: "+this.field);
+    }
   }
 
 }

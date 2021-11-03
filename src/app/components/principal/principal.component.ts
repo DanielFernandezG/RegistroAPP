@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/model/Usuario';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { AnimationController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DBTaskService } from 'src/app/services/dbtask.service';
+
 
 @Component({
   selector: 'app-principal',
@@ -16,13 +20,10 @@ export class PrincipalComponent implements OnInit {
     private activeroute: ActivatedRoute,
     private router: Router,
     private animationCtrl: AnimationController,
+    public authenticationSerive: AuthenticationService,
+    public dbtaskService: DBTaskService
   ) {
 
-    this.activeroute.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.usuario = this.router.getCurrentNavigation().extras.state.usuario;
-      }
-    });
 
   }
 
@@ -33,6 +34,8 @@ export class PrincipalComponent implements OnInit {
       .duration(600)
       .fromTo('opacity', '0.1', '1')
       .play();
+
+    this.dbtaskService.getNombreUsuario
   }
 
   public scan(): void {
