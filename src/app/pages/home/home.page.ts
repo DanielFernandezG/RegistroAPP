@@ -64,10 +64,7 @@ export class HomePage implements OnInit {
   ionViewWillEnter(){
     this.router.navigate(['home/perfil']);
   }
-  /**
-   * Función que permite cerrar la sesión actual
-   * actualiza el sesion_data de SQLite
-   */
+  
   logout(){
     this.authenticationSerive.logout();
   }

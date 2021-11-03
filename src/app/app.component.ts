@@ -41,18 +41,16 @@ export class AppComponent {
       });
     });
   }
-  /**
-   * Función privada que se encarga de generar la base de datos
-   */
+  
   private createDatabase(){
-    this.sqlite.create({ // Se usa la función create para crear la base de datos
-      name:'data.db', // Se llamara data
+    this.sqlite.create({ 
+      name:'data.db', 
       location:'default'
     }).then((db)=>{
       this.dbTaskService.setDatabase(db);
       this.dbTaskService.createTables();
-    }) // Si todo sale bien, muestra por consola el log del db
-    .catch(error=>{console.error('sadasd');}); // Si sale algo mal, muestra por consola el error
+    }) 
+    .catch(error=>{console.error('sadasd');}); 
   }
 }
 

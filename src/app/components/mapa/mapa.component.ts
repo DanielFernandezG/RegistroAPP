@@ -68,7 +68,7 @@ export class MapaComponent implements OnInit {
     });
   }
 
-  // Este método sirve para mostrar el mensaje emergente
+  
   public async presentAlert(titulo: string, mensaje: string) {
     const alert = await this.alertController.create({
       header: titulo,

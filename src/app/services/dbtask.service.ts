@@ -6,26 +6,18 @@ import { SQLiteObject } from '@ionic-native/sqlite/ngx';
 })
 export class DBTaskService {
 
-  /**
-   * Se declara una variable SQLiteObject y se inicializa en null
-   * donde se guardara la instancia de SQLiteObject
-   */
+
   db: SQLiteObject = null;
   
   constructor() { }
-  /**
-   * Permite guardar un objeto SQLiteObject
-   * en la variable db
-   */
+
   setDatabase(db:SQLiteObject) {
     if(this.db===null)
     {
       this.db=db
     };
   }
-  /**
-   * Crea las tablas necesarias para el funcionamiento
-   */
+
   createTables():Promise<any>{
     let tables=`
     CREATE TABLE IF NOT EXISTS sesion_data
@@ -53,17 +45,15 @@ export class DBTaskService {
     );`;
     return this.db.executeSql(tables);
   }
-  /**
-   * Retorna si existe un usuario activo o no.
-   */
+ 
   sesionActive(){
-    // Se desarrolla la consulta
+    
     let sql = `SELECT user_name,active FROM sesion_data WHERE active=1 LIMIT 1`;
-    // Se ejecuta la consulta y no le pasamos parametros [value,value1,...]
+    
     return this.db.executeSql(sql,[])
-    // Cuando se ejecute la consulta
-    .then(response=>{ // obtenemos lo que devuelve la consulta
-      return Promise.resolve(response.rows.item(0)); // Se obtiene el primer item de la consulta y se retorna
+    
+    .then(response=>{ 
+      return Promise.resolve(response.rows.item(0)); 
     });
   }
   /**
