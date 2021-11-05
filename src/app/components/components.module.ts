@@ -5,6 +5,8 @@ import { IonicModule } from "@ionic/angular";
 import { PrincipalComponent } from "./principal/principal.component";
 import { PerfilComponent } from "./perfil/perfil.component";
 import { MapaComponent } from './mapa/mapa.component';
+import { ApiclientComponent } from "./apiclient/apiclient.component";
+
 
 // imports de Angular Material
 import { MatCardModule } from '@angular/material/card';
@@ -28,12 +30,14 @@ import { MatDialogModule } from '@angular/material/dialog';
         PrincipalComponent,
         PerfilComponent,
         MapaComponent,
+        ApiclientComponent,
         
     ],
     exports: [
         PrincipalComponent,
         PerfilComponent,
         MapaComponent,
+        ApiclientComponent,
         FormsModule,
         
         
