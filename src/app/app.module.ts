@@ -16,12 +16,13 @@ import { AuthGardService } from './services/auth-gard.service';
 import { AuthenticationService } from './services/authentication.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, IonicStorageModule.forRoot()],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, IonicStorageModule.forRoot(), HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,

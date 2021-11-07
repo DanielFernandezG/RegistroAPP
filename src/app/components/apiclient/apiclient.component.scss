@@ -1,0 +1,29 @@
+.tituloPrincipal {
+    font-size: 1em;
+    color: darkblue;
+    font-weight: bold;
+    text-shadow: darkgray;
+}
+
+.publicacionSeleccionada  {
+    font-size: small !important;
+    color: darkgreen !important;
+    font-weight: bolder;
+}
+
+h6 {
+    color: darkgreen;
+}
+
+h4 {
+    color: darkblue;
+    font-weight: bold;
+}
+
+.sin-bordes {
+    box-shadow: none;
+}
+
+.con-padding-top {
+    margin-top: 15px !important;
+}

@@ -76,6 +76,7 @@ export class LoginPage implements OnInit {
     this.router.navigate(['recover-password'], navigationExtras);
   }
 
+
   registrar() {
     this.createSesionData(this.login);
   }
