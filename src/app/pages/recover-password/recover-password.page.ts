@@ -32,6 +32,7 @@ export class RecoverPasswordPage implements OnInit {
   ngOnInit() {
     const recover = this.animationCtrl.create()
       .addElement(document.querySelector('.recover'))
+      .addElement(document.querySelector('.recover1'))
       .addElement(document.querySelector('#boton'))
       .duration(500)
       .fromTo('transform', 'translatey(200px)', 'translateX(0px)')

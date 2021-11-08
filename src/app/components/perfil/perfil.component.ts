@@ -26,12 +26,12 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.persona.rut = '22.222.222.-2';
-    this.persona.nombre = 'Juanito Mendoza';
-    this.persona.numero = '+569 12 34 06 66';
-    this.persona.email = 'jmendoza@doucuc.cl';
-    this.persona.carrera = 'Analista Programador Computacional';
-    this.persona.sede = 'Padre Alonso de Ovalle';
+    // this.persona.rut = '22.222.222.-2';
+    // this.persona.nombre = 'Juanito Mendoza';
+    // this.persona.numero = '+569 12 34 06 66';
+    // this.persona.email = 'jmendoza@doucuc.cl';
+    // this.persona.carrera = 'Analista Programador Computacional';
+    // this.persona.sede = 'Padre Alonso de Ovalle';
   }
 
   async editarPerfil() {

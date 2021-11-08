@@ -1,7 +1,12 @@
-
-
-<mat-card id="fondo" class="card ion-text-center">
-  <button (click)="scan()" id="boton1" mat-raised-button color="warn">
-    <ion-icon name="qr-code-outline"></ion-icon> Registra tu asistencia
-  </button>
-</mat-card>
+<ion-content>
+  <br>
+  <div class="ion-text-center">
+    <h1>Bienvenido</h1>
+    <p *ngIf="usuario">Usuario: {{usuario}}</p>
+  </div>
+  <mat-card id="fondo" class="card ion-text-center">
+    <button (click)="scan()" id="boton1" mat-raised-button color="warn">
+      <ion-icon name="qr-code-outline"></ion-icon> Registra tu asistencia
+    </button>
+  </mat-card>
+</ion-content>

@@ -27,14 +27,6 @@ export class HomePage implements OnInit {
     public authenticationSerive:AuthenticationService
     ) {
 
-    this.activeroute.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.usuario = this.router.getCurrentNavigation().extras.state.usuario;
-      } else {
-        this.router.navigate(['/login']);
-      }
-    });
-
   }
 
   public ngOnInit() {
@@ -55,7 +47,7 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.router.navigate(['home/perfil']);
+    this.router.navigate(['home/principal']);
   }
   
   logout(){

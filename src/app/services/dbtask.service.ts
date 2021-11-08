@@ -102,4 +102,11 @@ export class DBTaskService {
     });;
   }
 
+  getNombreUsuarioActivo() {
+    let sql = `SELECT user_name FROM sesion_data WHERE active=1`;
+    return this.db.executeSql(sql, []).then(response => {
+      return Promise.resolve(response.rows.item(0));
+    });
+  }
+
 }

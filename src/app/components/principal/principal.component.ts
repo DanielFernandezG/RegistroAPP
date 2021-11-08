@@ -7,6 +7,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DBTaskService } from 'src/app/services/dbtask.service';
 
 
+
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
@@ -14,18 +15,17 @@ import { DBTaskService } from 'src/app/services/dbtask.service';
 })
 export class PrincipalComponent implements OnInit {
 
-  public usuario: Usuario;
-
   constructor(
     private activeroute: ActivatedRoute,
     private router: Router,
+    private storage: Storage,
     private animationCtrl: AnimationController,
     public authenticationSerive: AuthenticationService,
     public dbtaskService: DBTaskService
   ) {
-
-
   }
+
+  usuario: any;
 
   ngOnInit() {
     const card = this.animationCtrl.create()
@@ -35,13 +35,18 @@ export class PrincipalComponent implements OnInit {
       .fromTo('opacity', '0.1', '1')
       .play();
 
-    this.dbtaskService.getNombreUsuario
+    this.obtenerUser();
+  }
+
+  obtenerUser (){
+    this.dbtaskService.getNombreUsuarioActivo().then((data) => {
+      this.storage.set("USER_DATA", data);
+      this.usuario = data.user_name;
+    })
   }
 
   public scan(): void {
-
     const navigationExtras: NavigationExtras = {
-
     };
     this.router.navigate(['scan-qr'], navigationExtras);
   }
