@@ -4,7 +4,6 @@ import { CommonModule } from "@angular/common";
 import { IonicModule } from "@ionic/angular";
 import { PrincipalComponent } from "./principal/principal.component";
 import { PerfilComponent } from "./perfil/perfil.component";
-import { MapaComponent } from './mapa/mapa.component';
 import { ApiclientComponent } from "./apiclient/apiclient.component";
 
 
@@ -29,14 +28,12 @@ import { MatDialogModule } from '@angular/material/dialog';
     declarations: [
         PrincipalComponent,
         PerfilComponent,
-        MapaComponent,
         ApiclientComponent,
         
     ],
     exports: [
         PrincipalComponent,
         PerfilComponent,
-        MapaComponent,
         ApiclientComponent,
         FormsModule,
         
