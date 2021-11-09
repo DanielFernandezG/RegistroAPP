@@ -7,27 +7,25 @@ ion-content {
 ion-item {
   --padding-bottom: 10px;
 }
-  #boton1 {
-    background-color: #FFB800;
-    width: 100%;
-  }
-  
-  #boton2 {
-    background-color: #FFB800;
-    width: 100%;
-    
-  }
-  
-  #login {
-    display: flex;
-    justify-content: center;
-  }
+#boton1 {
+  background-color: #ffb800;
+  width: 100%;
+}
 
-  #principal{
-    background-color: #1A1A1A;
-  }
+#boton2 {
+  background-color: #ffb800;
+  width: 100%;
+}
 
-  #fondo{
-    background-color: #666666;
-  }
-  
+#login {
+  display: flex;
+  justify-content: center;
+}
+
+#principal {
+  background-color: #1a1a1a;
+}
+
+#fondo {
+  background-color: #666666;
+}

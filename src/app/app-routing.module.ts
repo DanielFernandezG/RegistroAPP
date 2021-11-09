@@ -25,6 +25,11 @@ const routes: Routes = [
     path: 'scan-qr',
     loadChildren: () => import('./pages/scan-qr/scan-qr.module').then( m => m.ScanQrPageModule)
   },
+  {
+    path: 'recuperar-contrasenna',
+    loadChildren: () => import('./pages/recuperar-contrasenna/recuperar-contrasenna.module').then( m => m.RecuperarContrasennaPageModule)
+  },
+
 ];
 
 @NgModule({

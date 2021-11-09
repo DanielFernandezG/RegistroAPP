@@ -2,7 +2,7 @@
 
   <ion-toolbar mode="ios">
     <ion-title class="tituloPrincipal">
-      ¡Foro TODAY!
+      ¡Foro Estudiantil!
     </ion-title>
   </ion-toolbar>
 
@@ -31,7 +31,7 @@
   <ion-card>
 
     <ion-card-header>
-      <ion-card-title>Ingresa tu publicación</ion-card-title>
+      <ion-card-title>Ingresa tu Comentario</ion-card-title>
       <ion-card-subtitle class="publicacionSeleccionada">{{publicacionSeleccionada}}</ion-card-subtitle>
     </ion-card-header>
 
@@ -55,7 +55,7 @@
   </ion-card>
 
   <ion-card class="sin-bordes">
-    <ion-card-title class="con-padding-top">Publicaciones recientes</ion-card-title>
+    <ion-card-title class="con-padding-top">Comentarios recientes</ion-card-title>
   </ion-card>
 
   <ion-card *ngFor="let p of publicaciones; let i=index; trackBy: getIdentificadorItemPublicacion">

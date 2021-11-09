@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController, AlertController, Animation, AnimationController } from '@ionic/angular';
-
 import { DBTaskService } from 'src/app/services/dbtask.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-
 import { type } from 'os';
 import { Usuario } from 'src/app/model/Usuario';
 import { Persona } from 'src/app/model/Persona';
-
-
 
 @Component({
   selector: 'app-login',
@@ -27,8 +23,6 @@ export class LoginPage implements OnInit {
 
   field: string = "";
 
-
-
   public usuario: Usuario;
 
   constructor(private router: Router,
@@ -38,11 +32,10 @@ export class LoginPage implements OnInit {
     private animationCtrl: AnimationController,
     public alertController: AlertController,
     public authenticationSerive: AuthenticationService
-  ) { }
+  ) {
+  }
+
   public ngOnInit(): void {
-
-
-
     const title = this.animationCtrl.create()
       .addElement(document.querySelector('.title'))
       .duration(500)
@@ -57,9 +50,7 @@ export class LoginPage implements OnInit {
   }
 
   ingresar() {
-
     if (this.validateModel(this.login)) {
-
       this.authenticationSerive.login(this.login);
     }
     else {
@@ -67,31 +58,18 @@ export class LoginPage implements OnInit {
     }
   }
 
-
   public restablecer(): void {
-
     const navigationExtras: NavigationExtras = {
-
     };
-    this.router.navigate(['recover-password'], navigationExtras);
+    this.router.navigate(['recuperar-contrasenna'], navigationExtras);
   }
-
 
   registrar() {
     this.createSesionData(this.login);
   }
-  /**
-   * Función que genera (registra) una nueva sesión
-   * @param login 
-   */
+  
   createSesionData(login: any) {
     if (this.validateModel(login)) {
-      /**
-       * Se hace una copia del login, se hace así ya que
-       * el operador '=' no haceuna copia de los datos, si no
-       * que crea una nueva referencia a los mismos datos.
-       * Por eso se utiliza el Object.assign
-       */
       let copy = Object.assign({}, login);
       copy.Active = 1;
       this.dbtaskService.createSesionData(copy)
@@ -109,28 +87,17 @@ export class LoginPage implements OnInit {
       this.presentToast("Falta: " + this.field);
     }
   }
-  /**
-   * validateModel sirve para validar que se ingrese algo en los
-   * campos del html mediante su modelo
-   */
+
   validateModel(model: any) {
-
     for (var [key, value] of Object.entries(model)) {
-
       if (value == "") {
-
         this.field = key;
-
         return false;
       }
     }
     return true;
   }
-  /**
-   * Muestra un toast al usuario
-   * @param message Mensaje a presentar al usuario
-   * @param duration Duración el toast, este es opcional
-   */
+
   async presentToast(message: string, duration?: number) {
     const toast = await this.toastController.create(
       {
@@ -143,7 +110,6 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter() {
     console.log('ionViewDidEnter');
-
     this.dbtaskService.sesionActive()
       .then((data) => {
         if (data != undefined) {
@@ -156,6 +122,7 @@ export class LoginPage implements OnInit {
         this.router.navigate(['login']);
       })
   }
+
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       header: 'Creación de Usuario',
@@ -172,10 +139,8 @@ export class LoginPage implements OnInit {
         }
       ]
     });
-
     await alert.present();
   }
-
 
   async mostrarMensaje(mensaje: string, duracion?: number) {
     const toast = await this.toastController.create({
@@ -192,9 +157,7 @@ export class LoginPage implements OnInit {
       message: mensaje,
       buttons: ['OK']
     });
-
     await alert.present();
-
     const { role } = await alert.onDidDismiss();
   }
 

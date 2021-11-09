@@ -1,4 +1,3 @@
-// import { getAttrsForDirectiveMatching } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { $ } from 'protractor';
@@ -6,7 +5,6 @@ import { Usuario } from 'src/app/model/Usuario';
 import { AnimationController } from '@ionic/angular';
 import { DBTaskService } from 'src/app/services/dbtask.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-
 
 @Component({
   selector: 'app-home',
@@ -17,7 +15,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class HomePage implements OnInit {
 
   public usuario: Usuario;
-
 
   constructor(
     private activeroute: ActivatedRoute,
@@ -30,9 +27,6 @@ export class HomePage implements OnInit {
   }
 
   public ngOnInit() {
-
-    this.router.navigate(['/home/principal']);
-
     const footer = this.animationCtrl.create()
       .addElement(document.querySelector('.footer'))
       .duration(1000)

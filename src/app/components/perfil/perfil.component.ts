@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Persona } from 'src/app/model/Persona';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -13,6 +14,7 @@ export class PerfilComponent implements OnInit {
 
   constructor(
     private alertController: AlertController,
+    private router: Router,
   ) {
 
     this.persona = new Persona();
@@ -107,6 +109,10 @@ export class PerfilComponent implements OnInit {
 
     return true;
 
+  }
+
+  restablecerPassword() {
+    this.router.navigate(['recover-password']);
   }
 
 }

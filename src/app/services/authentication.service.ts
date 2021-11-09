@@ -89,7 +89,7 @@ export class AuthenticationService {
               console.log(data);
               this.authState.next(true);
               this.presentToast("Contraseña Restablecida"); 
-              this.router.navigate(['login']);
+              this.router.navigate(['home/perfil']);
 
             });
         }
