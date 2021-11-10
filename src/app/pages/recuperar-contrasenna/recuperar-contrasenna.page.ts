@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { ToastController, Animation, AnimationController } from '@ionic/angular';
+import { ToastController, Animation, AnimationController, AlertController } from '@ionic/angular';
 import { Usuario } from 'src/app/model/Usuario';
 
 @Component({
@@ -14,7 +14,8 @@ export class RecuperarContrasennaPage implements OnInit {
 
   constructor(private router: Router,
     private toastController: ToastController,
-    private animationCtrl: AnimationController) {
+    private animationCtrl: AnimationController,
+    public alertController: AlertController,) {
     this.usuario = new Usuario();
     this.usuario.nombreUsuario = '';
     this.usuario.password = '';
@@ -36,10 +37,22 @@ export class RecuperarContrasennaPage implements OnInit {
   }
 
   public inicio(): void {
+    if (!this.validarUsuario(this.usuario)) {
+      return;
+    }
     this.mostrarMensaje('¡Se ha enviado un correo para restablecer su contraseña!');
     const navigationExtras: NavigationExtras = {
     };
     this.router.navigate(['login'], navigationExtras);
+  }
+
+  public validarUsuario(usuario: Usuario): boolean {
+    const mensajeError = usuario.validarNombreUsuario();
+    if (mensajeError) {
+      this.mostrarAlerta(mensajeError);
+      return false;
+    }
+    return true;
   }
 
   async mostrarMensaje(mensaje: string, duracion?: number) {
@@ -51,4 +64,13 @@ export class RecuperarContrasennaPage implements OnInit {
     toast.present();
   }
 
+  async mostrarAlerta(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: 'Alerta',
+      message: mensaje,
+      buttons: ['OK']
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+  }
 }

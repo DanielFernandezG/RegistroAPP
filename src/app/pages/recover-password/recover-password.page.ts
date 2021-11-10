@@ -14,16 +14,23 @@ import { DBTaskService } from '../../services/dbtask.service';
 })
 export class RecoverPasswordPage implements OnInit {
 
-  login:any={
-    Usuario:"",
-    Password:""
+  login: any = {
+    Usuario: "",
+    Password: ""
   }
 
-  field:string="";
+  field: string = "";
 
   public usuario: Usuario;
 
-  constructor(private router: Router, private toastController: ToastController, private animationCtrl: AnimationController, private alertController: AlertController, public authenticationSerive:AuthenticationService) {
+  constructor(
+    private router: Router,
+    private toastController: ToastController,
+    private animationCtrl: AnimationController,
+    private alertController: AlertController,
+    public authenticationSerive: AuthenticationService,
+    public dbtaskService: DBTaskService,
+    private storage: Storage) {
     this.usuario = new Usuario();
     this.usuario.nombreUsuario = '';
     this.usuario.password = '';
@@ -43,16 +50,17 @@ export class RecoverPasswordPage implements OnInit {
       .duration(1000)
       .fromTo('opacity', '0.1', '1')
       .play();
+    this.obtenerUser();
   }
 
   public inicio(): void {
 
-    if(this.validateModel(this.login)){
+    if (this.validateModel(this.login)) {
       // Se obtiene si existe alguna data de sesión
       this.authenticationSerive.recuperarContrasenna(this.login);
     }
-    else{
-      this.presentToast("Falta: "+this.field);
+    else {
+      this.presentToast("Falta: " + this.field);
     }
 
 
@@ -91,13 +99,13 @@ export class RecoverPasswordPage implements OnInit {
     const { role } = await alert.onDidDismiss();
   }
 
-  validateModel(model:any){
+  validateModel(model: any) {
     // Recorro todas las entradas que me entrega Object entries y obtengo su clave, valor
     for (var [key, value] of Object.entries(model)) {
       // Si un valor es "" se retornara false y se avisara de lo faltante
-      if (value=="") {
+      if (value == "") {
         // Se asigna el campo faltante
-        this.field=key;
+        this.field = key;
         // Se retorna false
         return false;
       }
@@ -105,25 +113,32 @@ export class RecoverPasswordPage implements OnInit {
     return true;
   }
 
-  async presentToast(message:string, duration?:number){
+  async presentToast(message: string, duration?: number) {
     const toast = await this.toastController.create(
       {
-        message:message,
-        duration:duration?duration:2000
+        message: message,
+        duration: duration ? duration : 2000
       }
     );
     toast.present();
   }
 
-  ingresar(){
+  ingresar() {
     // Se valida que el usuario ingreso todos los datos
-    if(this.validateModel(this.login)){
+    if (this.validateModel(this.login)) {
       // Se obtiene si existe alguna data de sesión
       this.authenticationSerive.login(this.login);
     }
-    else{
-      this.presentToast("Falta: "+this.field);
+    else {
+      this.presentToast("Falta: " + this.field);
     }
+  }
+
+  obtenerUser() {
+    this.dbtaskService.getNombreUsuarioActivo().then((data) => {
+      this.storage.set("USER_DATA", data);
+      this.login.Usuario = data.user_name;
+    })
   }
 
 }

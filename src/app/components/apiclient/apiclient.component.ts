@@ -1,6 +1,9 @@
 import { APIClientService } from 'src/app/services/apiclient.service';
 import { Component, OnInit, ɵisDefaultChangeDetectionStrategy } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DBTaskService } from 'src/app/services/dbtask.service';
 
 @Component({
   selector: 'app-apiclient',
@@ -8,6 +11,8 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./apiclient.component.scss'],
 })
 export class ApiclientComponent {
+
+  usuario: any;
 
   // Esta propiedad se liga por ngModel con el "ion-select" que muestra los usuarios "Publicadores".
   selectedUserId: number;
@@ -43,7 +48,10 @@ export class ApiclientComponent {
 
   constructor(
     private api: APIClientService,
-    private toastController: ToastController) {
+    private toastController: ToastController,
+    public authenticationSerive: AuthenticationService,
+    public dbtaskService: DBTaskService,
+    private storage: Storage) {
   }
 
   // El siguiente es uno de los eventos del ciclo de vida de las páginas en Ionic/Angular.
@@ -58,10 +66,11 @@ export class ApiclientComponent {
   // 4. Cargar la lista de "Publicaciones recientes".
 
   ionViewWillEnter() {
-    this.selectedUserId = null;
-    this.setPublicacion(null, null, '', '', '');
+    this.selectedUserId = 0;
+    this.setPublicacion(0, null, '', '', '');
     this.getUsuarios();
     this.getPublicaciones();
+    this.obtenerUser();
   }
 
   // Este método se ejecuta cada vez que el usuario cambia el nombre del "Publicador",
@@ -96,8 +105,11 @@ export class ApiclientComponent {
   setPublicacion(userId, pubId, title, body, name) {
 
     // Establecer los datos de la publicación
-
-    this.publicacion.userId = userId;
+    if (this.selectedUserId===0) {
+      this.publicacion.userId = 0;
+    } else {
+      this.publicacion.userId = userId;
+    }
     this.publicacion.id = pubId;
     this.publicacion.title = title;
     this.publicacion.body = body;
@@ -307,6 +319,13 @@ export class ApiclientComponent {
     });
     toast.present();
     throw error;
+  }
+
+  obtenerUser (){
+    this.dbtaskService.getNombreUsuarioActivo().then((data) => {
+      this.storage.set("USER_DATA", data);
+      this.usuario = data.user_name;
+    })
   }
 
 }

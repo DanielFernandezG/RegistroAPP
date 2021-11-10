@@ -20,7 +20,7 @@
 
   <ion-item class="ion-padding-bottom recover">
     <ion-label position="floating">Usuario</ion-label>
-    <ion-input type="text"></ion-input>
+    <ion-input [(ngModel)]="usuario.nombreUsuario" type="text"></ion-input>
   </ion-item>
 
   <button (click)="inicio()" id="boton1" mat-raised-button>
