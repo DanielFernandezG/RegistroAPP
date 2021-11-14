@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
-import { AlertController, ToastController, Animation, AnimationController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, ToastController, AnimationController } from '@ionic/angular';
 import { Usuario } from 'src/app/model/Usuario';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -14,12 +14,7 @@ import { DBTaskService } from '../../services/dbtask.service';
 })
 export class RecoverPasswordPage implements OnInit {
 
-  login: any = {
-    Usuario: "",
-    Password: ""
-  }
-
-  field: string = "";
+  rePassword: String = "";
 
   public usuario: Usuario;
 
@@ -40,6 +35,7 @@ export class RecoverPasswordPage implements OnInit {
     const recover = this.animationCtrl.create()
       .addElement(document.querySelector('.recover'))
       .addElement(document.querySelector('.recover1'))
+      .addElement(document.querySelector('.recover2'))
       .addElement(document.querySelector('#boton'))
       .duration(500)
       .fromTo('transform', 'translatey(200px)', 'translateX(0px)')
@@ -53,17 +49,34 @@ export class RecoverPasswordPage implements OnInit {
     this.obtenerUser();
   }
 
-  public inicio(): void {
-
-    if (this.validateModel(this.login)) {
-      // Se obtiene si existe alguna data de sesión
-      this.authenticationSerive.recuperarContrasenna(this.login);
+  public recuperar(): void {
+    if (this.rePassword === this.usuario.password) {
+      if (this.validarPassword(this.usuario)) {
+        this.authenticationSerive.recuperarContrasenna(this.usuario);
+      }
     }
     else {
-      this.presentToast("Falta: " + this.field);
+      this.mostrarAlerta('Las contraseñas no coinciden');
+    } 
+  }
+
+  async mostrarAlerta(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: 'Alerta',
+      message: mensaje,
+      buttons: ['OK']
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+  }
+
+  public validarPassword(usuario: Usuario): boolean {
+    const mensajeError = usuario.validarPassword();
+    if (mensajeError) {
+      this.mostrarAlerta(mensajeError);
+      return false;
     }
-
-
+    return true;
   }
 
   async mostrarMensaje(mensaje: string, duracion?: number) {
@@ -75,69 +88,10 @@ export class RecoverPasswordPage implements OnInit {
     toast.present();
   }
 
-  public validarNombreUsuario(usuario: Usuario): boolean {
-
-    const mensajeError = usuario.validarNombreUsuario();
-
-    if (mensajeError) {
-      this.mostrarAlerta(mensajeError);
-      return false;
-    }
-
-    return true;
-  }
-
-  async mostrarAlerta(mensaje: string) {
-    const alert = await this.alertController.create({
-      header: 'Alerta',
-      message: mensaje,
-      buttons: ['OK']
-    });
-
-    await alert.present();
-
-    const { role } = await alert.onDidDismiss();
-  }
-
-  validateModel(model: any) {
-    // Recorro todas las entradas que me entrega Object entries y obtengo su clave, valor
-    for (var [key, value] of Object.entries(model)) {
-      // Si un valor es "" se retornara false y se avisara de lo faltante
-      if (value == "") {
-        // Se asigna el campo faltante
-        this.field = key;
-        // Se retorna false
-        return false;
-      }
-    }
-    return true;
-  }
-
-  async presentToast(message: string, duration?: number) {
-    const toast = await this.toastController.create(
-      {
-        message: message,
-        duration: duration ? duration : 2000
-      }
-    );
-    toast.present();
-  }
-
-  ingresar() {
-    // Se valida que el usuario ingreso todos los datos
-    if (this.validateModel(this.login)) {
-      // Se obtiene si existe alguna data de sesión
-      this.authenticationSerive.login(this.login);
-    }
-    else {
-      this.presentToast("Falta: " + this.field);
-    }
-  }
-
   obtenerUser() {
     this.dbtaskService.getNombreUsuarioActivo().then((data) => {
       this.storage.set("USER_DATA", data);
-      this.login.Usuario = data.user_name;
+      this.usuario.nombreUsuario = data.user_name;
     })
   }
 

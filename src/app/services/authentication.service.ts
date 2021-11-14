@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { ToastController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { DBTaskService } from './dbtask.service';
+import { Usuario } from '../model/Usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -55,12 +56,12 @@ export class AuthenticationService {
         .catch((error) => console.error(error))
     });
   }
-  login(login: any) {
 
-    this.dbtaskService.getSesionData(login)
+  login(usuario: Usuario) {
+    this.dbtaskService.getSesionData(usuario)
       .then((data) => {
         if (data === undefined) {
-          this.presentToast("Credenciales Incorrectas");
+          this.mostrarMensaje("Credenciales Incorrectas");
         } else {
           data.active = 1;
           this.dbtaskService.updateSesionData(data)
@@ -76,21 +77,20 @@ export class AuthenticationService {
         console.log(error);
       });
   }
-  recuperarContrasenna(login: any) {
-    this.dbtaskService.getNombreUsuario(login)
+
+  recuperarContrasenna(usuario: Usuario) {
+    this.dbtaskService.getNombreUsuario(usuario)
       .then((data) => {
         if (data === undefined) {
-          this.presentToast("Credenciales Incorrectas");
+          this.mostrarMensaje("Credenciales Incorrectas");
         } else {
-          data.password = login.Password;
+          data.password = usuario.password;
           this.dbtaskService.updateContrasenna(data)
             .then((response) => {
               this.storage.set("USER_DATA", data);
               console.log(data);
-              this.authState.next(true);
-              this.presentToast("Contraseña Restablecida"); 
-              this.router.navigate(['home/perfil']);
-
+              this.mostrarMensaje("Contraseña Restablecida");
+              this.router.navigate(['home']);
             });
         }
       })
@@ -98,16 +98,18 @@ export class AuthenticationService {
         console.log(error);
       });
   }
-  async presentToast(message: string, duration?: number) {
-    const toast = await this.toastController.create(
-      {
-        message: message,
-        duration: duration ? duration : 2000
-      }
-    );
+
+  async mostrarMensaje(mensaje: string, duracion?: number) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: duracion ? duracion : 2000,
+      position: "top"
+    });
     toast.present();
   }
+
   isAuthenticated() {
     return this.authState.value;
   }
+
 }

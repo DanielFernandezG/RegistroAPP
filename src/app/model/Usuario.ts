@@ -14,7 +14,7 @@ export class Usuario {
 
     public validarPassword(): string {
         if (this.password.trim() === '') {
-            return 'Para entrar al sistema debe ingresar la contraseña.';
+            return 'Debe ingresar la contraseña.';
         }
         for (let i = 0; i < this.password.length; i++) {
             if ('0123456789'.indexOf(this.password.charAt(i)) === -1) {

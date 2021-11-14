@@ -56,8 +56,8 @@ export class DBTaskService {
   getSesionData(sesion: any) {
     let sql = `SELECT user_name, active FROM sesion_data
     WHERE user_name=? AND password=? LIMIT 1`;
-    return this.db.executeSql(sql, [sesion.Usuario,
-    sesion.Password]).then(response => {
+    return this.db.executeSql(sql, [sesion.nombreUsuario,
+    sesion.password]).then(response => {
       return Promise.resolve(response.rows.item(0));
     });
   }
@@ -68,8 +68,8 @@ export class DBTaskService {
   createSesionData(sesion: any) {
     let sql = `INSERT INTO sesion_data(user_name,password,active)
     VALUES(?,?,?)`;
-    return this.db.executeSql(sql, [sesion.Usuario,
-    sesion.Password, sesion.Active]).then(response => {
+    return this.db.executeSql(sql, [sesion.nombreUsuario,
+    sesion.password, sesion.Active]).then(response => {
       return Promise.resolve(response.rows.item(0));
     });;
   }
@@ -82,7 +82,7 @@ export class DBTaskService {
 
   getNombreUsuario(sesion: any) {
     let sql = `SELECT user_name FROM sesion_data WHERE user_name=?`;
-    return this.db.executeSql(sql, [sesion.Usuario]).then(response => {
+    return this.db.executeSql(sql, [sesion.nombreUsuario]).then(response => {
       return Promise.resolve(response.rows.item(0));
     });
   }

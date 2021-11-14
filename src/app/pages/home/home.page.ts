@@ -16,6 +16,8 @@ export class HomePage implements OnInit {
 
   public usuario: Usuario;
 
+  public valueSelected: string;
+
   constructor(
     private activeroute: ActivatedRoute,
     private router: Router,
@@ -32,7 +34,7 @@ export class HomePage implements OnInit {
       .duration(1000)
       .fromTo('transform', 'translateX(-300px)', 'translateX(0px)')
       .play();
-
+    this.valueSelected = "principal";
   }
 
   segmentChanged($event) {
@@ -42,6 +44,7 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter(){
     this.router.navigate(['home/principal']);
+    this.valueSelected = "principal";
   }
   
   logout(){

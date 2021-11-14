@@ -10,7 +10,7 @@
   </ion-toolbar>
 
   <ion-toolbar>
-    <ion-segment id="boton" value="principal" (ionChange)="segmentChanged($event)">
+    <ion-segment id="boton" [value]="valueSelected" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="principal">
         <ion-icon name="home-outline"></ion-icon>
         <ion-label>Home</ion-label>

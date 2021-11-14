@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController, AlertController, Animation, AnimationController } from '@ionic/angular';
+import { ToastController, AlertController, AnimationController } from '@ionic/angular';
 import { DBTaskService } from 'src/app/services/dbtask.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { type } from 'os';
 import { Usuario } from 'src/app/model/Usuario';
-import { Persona } from 'src/app/model/Persona';
 
 @Component({
   selector: 'app-login',
@@ -16,16 +14,10 @@ import { Persona } from 'src/app/model/Persona';
 
 export class LoginPage implements OnInit {
 
-  login: any = {
-    Usuario: "",
-    Password: ""
-  }
-
-  field: string = "";
-
   public usuario: Usuario;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     public dbtaskService: DBTaskService,
     private toastController: ToastController,
     private storage: Storage,
@@ -33,6 +25,9 @@ export class LoginPage implements OnInit {
     public alertController: AlertController,
     public authenticationSerive: AuthenticationService
   ) {
+    this.usuario = new Usuario();
+    this.usuario.nombreUsuario = '';
+    this.usuario.password = '';
   }
 
   public ngOnInit(): void {
@@ -50,11 +45,8 @@ export class LoginPage implements OnInit {
   }
 
   ingresar() {
-    if (this.validateModel(this.login)) {
-      this.authenticationSerive.login(this.login);
-    }
-    else {
-      this.presentToast("Falta: " + this.field);
+    if (this.validarUsuario(this.usuario)) {
+      this.authenticationSerive.login(this.usuario);
     }
   }
 
@@ -65,47 +57,32 @@ export class LoginPage implements OnInit {
   }
 
   registrar() {
-    this.createSesionData(this.login);
+    this.createSesionData(this.usuario);
   }
-  
-  createSesionData(login: any) {
-    if (this.validateModel(login)) {
-      let copy = Object.assign({}, login);
+
+  createSesionData(usuario: any) {
+    if (this.validarUsuario(usuario)) {
+      let copy = Object.assign({}, usuario);
       copy.Active = 1;
       this.dbtaskService.createSesionData(copy)
         .then((data) => {
-          this.presentToast("Usuario creado exitosamente");
+          this.mostrarMensaje("Usuario creado exitosamente");
           this.storage.set("USER_DATA", data);
           this.router.navigate(['home']);
-          this.dbtaskService.createPerfil();
         })
         .catch((error) => {
-          this.presentToast("El usuario ya existe");
+          this.mostrarMensaje("El usuario ya existe");
         })
     }
-    else {
-      this.presentToast("Falta: " + this.field);
-    }
   }
 
-  validateModel(model: any) {
-    for (var [key, value] of Object.entries(model)) {
-      if (value == "") {
-        this.field = key;
-        return false;
-      }
+  public validarUsuario(usuario: Usuario): boolean {
+    const mensajeError = usuario.validarUsuario();
+    if (mensajeError) {
+      this.mostrarAlerta(mensajeError);
+      return false;
     }
     return true;
-  }
-
-  async presentToast(message: string, duration?: number) {
-    const toast = await this.toastController.create(
-      {
-        message: message,
-        duration: duration ? duration : 2000
-      }
-    );
-    toast.present();
   }
 
   ionViewWillEnter() {
@@ -121,25 +98,6 @@ export class LoginPage implements OnInit {
         console.error(error);
         this.router.navigate(['login']);
       })
-  }
-
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      header: 'Creación de Usuario',
-      message: 'Mensaje <strong>El usuario no existe, desea registrarse?</strong>',
-      buttons: [
-        {
-          text: 'NO',
-          role: 'cancel'
-        }, {
-          text: 'SI',
-          handler: () => {
-            this.createSesionData(this.login)
-          }
-        }
-      ]
-    });
-    await alert.present();
   }
 
   async mostrarMensaje(mensaje: string, duracion?: number) {

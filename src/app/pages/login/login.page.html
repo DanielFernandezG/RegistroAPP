@@ -21,7 +21,7 @@
     <ion-card-content>
       <mat-form-field appearance="fill" id="login">
         <mat-label>Ingrese Usuario</mat-label>
-        <input matInput placeholder="Ej: Juan" [(ngModel)]="login.Usuario" />
+        <input matInput placeholder="Ej: Juan" [(ngModel)]="usuario.nombreUsuario" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" id="login">
@@ -30,7 +30,7 @@
           matInput
           type="password"
           placeholder="4 digitos"
-          [(ngModel)]="login.Password"
+          [(ngModel)]="usuario.password"
         />
       <br>
       </mat-form-field>
