@@ -1,24 +1,24 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+// import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+// import { IonicModule } from '@ionic/angular';
 
-import { RecuperarContrasennaPage } from './recuperar-contrasenna.page';
+// import { RecuperarContrasennaPage } from './recuperar-contrasenna.page';
 
-describe('RecuperarContrasennaPage', () => {
-  let component: RecuperarContrasennaPage;
-  let fixture: ComponentFixture<RecuperarContrasennaPage>;
+// describe('RecuperarContrasennaPage', () => {
+//   let component: RecuperarContrasennaPage;
+//   let fixture: ComponentFixture<RecuperarContrasennaPage>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ RecuperarContrasennaPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+//   beforeEach(waitForAsync(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ RecuperarContrasennaPage ],
+//       imports: [IonicModule.forRoot()]
+//     }).compileComponents();
 
-    fixture = TestBed.createComponent(RecuperarContrasennaPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+//     fixture = TestBed.createComponent(RecuperarContrasennaPage);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

@@ -29,6 +29,11 @@ const routes: Routes = [
     path: 'recuperar-contrasenna',
     loadChildren: () => import('./pages/recuperar-contrasenna/recuperar-contrasenna.module').then( m => m.RecuperarContrasennaPageModule)
   },
+  {
+    path: '**',
+    loadChildren: () => import('./pages/error404/error404.module').then( m => m.Error404PageModule)
+  },
+
 
 ];
 
